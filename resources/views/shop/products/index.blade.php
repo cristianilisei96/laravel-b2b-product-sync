@@ -5,9 +5,21 @@
                 Product Catalog
             </h2>
 
-            <a href="{{ route('dashboard') }}" class="text-sm text-blue-600 hover:underline">
-                Back to dashboard
-            </a>
+            @auth
+                @if (auth()->user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" class="text-sm text-blue-600 hover:underline">
+                        Admin Dashboard
+                    </a>
+                @else
+                    <a href="{{ route('dashboard') }}" class="text-sm text-blue-600 hover:underline">
+                        Dashboard
+                    </a>
+                @endif
+            @else
+                <a href="{{ url('/') }}" class="text-sm text-blue-600 hover:underline">
+                    Home
+                </a>
+            @endauth
         </div>
     </x-slot>
 
