@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Shop\ProductController as ShopProductController;
 use App\Http\Controllers\Shop\CartController;
+use App\Http\Controllers\Shop\CheckoutController;
+use App\Http\Controllers\Shop\OrderController as ShopOrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/products/{product}', [CartController::class, 'store'])->name('shop.cart.store');
     Route::patch('/cart/items/{cartItem}', [CartController::class, 'update'])->name('shop.cart.update');
     Route::delete('/cart/items/{cartItem}', [CartController::class, 'destroy'])->name('shop.cart.destroy');
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('shop.checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('shop.checkout.store');
+
+    Route::get('/orders', [ShopOrderController::class, 'index'])->name('shop.orders.index');
+    Route::get('/orders/{order}', [ShopOrderController::class, 'show'])->name('shop.orders.show');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {

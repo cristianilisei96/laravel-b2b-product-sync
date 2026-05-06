@@ -137,10 +137,10 @@
                             </div>
                         </div>
 
-                        <button type="button"
+                        <a href="{{ route('shop.checkout.index') }}"
                             class="inline-flex justify-center items-center px-5 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
-                            Checkout demo coming next
-                        </button>
+                            Proceed to checkout
+                        </a>
                     </div>
                 @endif
             </div>
