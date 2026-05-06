@@ -1,58 +1,312 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel B2B Product Sync
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel portfolio project that simulates a supplier-based e-commerce platform.
 
-## About Laravel
+The application imports products from an external supplier API, synchronizes categories, prices, stock and images, and provides both an admin area and a customer shopping flow.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Demo Accounts
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Admin account:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```text
+Email: admin@gmail.com
+Password: 12345678
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Customer account:
 
-## Contributing
+```text
+Email: customer@gmail.com
+Password: 12345678
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Main Features
 
-## Code of Conduct
+### Authentication and Roles
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- User authentication using Laravel Breeze
+- Admin and Customer roles
+- Role-based redirects after login
+- Protected admin routes using custom middleware
+- Public product catalog available for guests
 
-## Security Vulnerabilities
+### Supplier API Integration
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- External supplier API integration using DummyJSON
+- Product import with pagination support
+- Category creation and update
+- Product creation and update using external supplier IDs
+- Product image import
+- Price calculation using a markup multiplier
+- Stock synchronization
+- Import logs with created, updated and skipped products
+- Artisan command for supplier imports
 
-## License
+### Admin Area
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Admin dashboard with real statistics
+- Product catalog management view
+- Supplier import page
+- Import history and logs
+- Order management
+- Order status update: pending, processing, completed, cancelled
+- Low-stock product overview
+
+### Customer Area
+
+- Public product catalog
+- Product details page
+- Shopping cart
+- Quantity update and remove from cart
+- Demo checkout flow
+- Customer order history
+- Order details page
+
+## Tech Stack
+
+- Laravel
+- PHP
+- MySQL
+- Blade
+- Tailwind CSS
+- Laravel Breeze
+- External API integration
+- Artisan Commands
+- Custom Middleware
+- Eloquent Relationships
+- Database Seeders
+
+## Project Structure Highlights
+
+```text
+app/
+├── Actions/
+│   └── ImportSupplierProductsAction.php
+├── Console/Commands/
+│   └── ImportSupplierProductsCommand.php
+├── Http/Controllers/
+│   ├── Admin/
+│   │   ├── DashboardController.php
+│   │   ├── OrderController.php
+│   │   ├── ProductController.php
+│   │   └── SupplierImportController.php
+│   └── Shop/
+│       ├── CartController.php
+│       ├── CheckoutController.php
+│       ├── OrderController.php
+│       └── ProductController.php
+├── Http/Middleware/
+│   └── AdminMiddleware.php
+├── Models/
+│   ├── CartItem.php
+│   ├── Category.php
+│   ├── ImportLog.php
+│   ├── Order.php
+│   ├── OrderItem.php
+│   ├── Product.php
+│   ├── ProductImage.php
+│   ├── Role.php
+│   └── User.php
+└── Services/
+    └── DummyJsonSupplierService.php
+```
+
+## Supplier Import Flow
+
+The import system fetches products from the external supplier API and stores them locally.
+
+On repeated imports, products are not duplicated. They are updated using the external supplier product ID.
+
+```text
+Supplier API
+    ↓
+DummyJsonSupplierService
+    ↓
+ImportSupplierProductsAction
+    ↓
+Categories / Products / Product Images
+    ↓
+Import Logs
+```
+
+The import can be triggered from:
+
+- Admin interface
+- Artisan command
+
+```bash
+php artisan supplier:import-products --limit=10 --skip=0
+```
+
+## E-commerce Flow
+
+```text
+Customer browses catalog
+    ↓
+Customer opens product details
+    ↓
+Customer adds product to cart
+    ↓
+Customer updates quantity or removes products
+    ↓
+Customer places demo order
+    ↓
+Stock is reduced locally
+    ↓
+Admin views and updates order status
+```
+
+## Database Entities
+
+Main tables used by the application:
+
+- users
+- roles
+- categories
+- products
+- product_images
+- import_logs
+- cart_items
+- orders
+- order_items
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/cristianilisei96/laravel-b2b-product-sync.git
+cd laravel-b2b-product-sync
+```
+
+Install PHP dependencies:
+
+```bash
+composer install
+```
+
+Install frontend dependencies:
+
+```bash
+npm install
+```
+
+Copy the environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+Configure your database in `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_b2b_product_sync
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Run migrations and seeders:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+Start Vite:
+
+```bash
+npm run dev
+```
+
+Open the application:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Useful Commands
+
+Import products from the supplier API:
+
+```bash
+php artisan supplier:import-products --limit=10 --skip=0
+```
+
+Reset database and seed demo data:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Clear Laravel cache:
+
+```bash
+php artisan optimize:clear
+```
+
+## Screenshots
+
+Screenshots will be added soon.
+
+Suggested screenshots:
+
+- Landing page
+- Admin dashboard
+- Supplier import page
+- Admin products page
+- Product catalog
+- Product details page
+- Cart page
+- Checkout page
+- Customer orders page
+- Admin orders page
+
+## Future Improvements
+
+- Scheduled product synchronization
+- Queue-based imports
+- Product editing in admin
+- More advanced stock rules
+- Product search improvements
+- Order email notifications
+- Payment provider integration in test mode
+- REST API endpoints for products and orders
+- Automated tests
+- Docker setup for easier local installation
+
+## What This Project Demonstrates
+
+This project demonstrates practical Laravel skills, including:
+
+- Building a role-based application
+- Working with external APIs
+- Mapping external supplier data into a local database
+- Preventing duplicate products during repeated imports
+- Managing product stock and prices
+- Building admin dashboards
+- Creating a basic e-commerce flow
+- Using Eloquent relationships
+- Using custom middleware
+- Creating Artisan commands
+- Structuring code into services and actions
+
+## Author
+
+Cristian Ilisei
+
+- GitHub: https://github.com/cristianilisei96
+- LinkedIn: https://www.linkedin.com/in/cristianilisei96
