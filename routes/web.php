@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\SupplierImportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Shop\ProductController as ShopProductController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,5 +33,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 });
+
+Route::get('/shop', [ShopProductController::class, 'index'])->name('shop.products.index');
+Route::get('/shop/products/{product:slug}', [ShopProductController::class, 'show'])->name('shop.products.show');
 
 require __DIR__ . '/auth.php';
