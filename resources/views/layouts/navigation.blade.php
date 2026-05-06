@@ -1,4 +1,12 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-200">
+    @php
+        $cartItemsCount = 0;
+
+        if (auth()->check() && !auth()->user()->isAdmin()) {
+            $cartItemsCount = auth()->user()->cartItems()->sum('quantity');
+        }
+    @endphp
+
     <div class="max-w-7xl mx-auto px-6 py-4">
         <div class="flex items-center justify-between">
             {{-- Logo --}}
@@ -28,6 +36,12 @@
                         <a href="{{ route('shop.cart.index') }}"
                             class="text-sm {{ request()->routeIs('shop.cart.*') ? 'text-gray-900 font-medium' : 'text-gray-600 hover:text-gray-900' }}">
                             Cart
+                            @if ($cartItemsCount > 0)
+                                <span
+                                    class="ml-1 inline-flex items-center justify-center rounded-full bg-gray-900 px-2 py-0.5 text-xs text-[0.7rem] font-semibold text-white">
+                                    {{ $cartItemsCount }}
+                                </span>
+                            @endif
                         </a>
 
                         <a href="{{ route('shop.orders.index') }}"
@@ -116,6 +130,12 @@
                     <a href="{{ route('shop.cart.index') }}"
                         class="block text-sm {{ request()->routeIs('shop.cart.*') ? 'text-gray-900 font-medium' : 'text-gray-600' }}">
                         Cart
+                        @if ($cartItemsCount > 0)
+                            <span
+                                class="ml-1 inline-flex items-center justify-center rounded-full bg-gray-900 px-2 py-0.5 text-xs text-[0.7rem] font-semibold text-white">
+                                {{ $cartItemsCount }}
+                            </span>
+                        @endif
                     </a>
 
                     <a href="{{ route('shop.orders.index') }}"
