@@ -260,20 +260,41 @@ php artisan optimize:clear
 
 ## Screenshots
 
-Screenshots will be added soon.
+### Landing Page
 
-Suggested screenshots:
+![Landing Page](public/screenshots/landing-page.png)
 
-- Landing page
-- Admin dashboard
-- Supplier import page
-- Admin products page
-- Product catalog
-- Product details page
-- Cart page
-- Checkout page
-- Customer orders page
-- Admin orders page
+### Admin Dashboard
+
+![Admin Dashboard](public/screenshots/admin-dashboard.png)
+
+### Supplier Import
+
+![Supplier Import](public/screenshots/supplier-import.png)
+
+### Admin Products
+
+![Admin Products](public/screenshots/admin-products.png)
+
+### Product Catalog
+
+![Product Catalog](public/screenshots/shop-catalog.png)
+
+### Product Details
+
+![Product Details](public/screenshots/product-details.png)
+
+### Shopping Cart
+
+![Shopping Cart](public/screenshots/cart.png)
+
+### Checkout
+
+![Checkout](public/screenshots/checkout.png)
+
+### Admin Order Details
+
+![Admin Order Details](public/screenshots/admin-order-details.png)
 
 ## Future Improvements
 
