@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\SupplierImportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProductController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +29,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('/supplier-imports', [SupplierImportController::class, 'index'])->name('supplier-imports.index');
     Route::post('/supplier-imports', [SupplierImportController::class, 'store'])->name('supplier-imports.store');
+
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 });
 
 require __DIR__ . '/auth.php';

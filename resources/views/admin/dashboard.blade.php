@@ -15,10 +15,15 @@
                     orders.
                 </p>
             </div>
-            <div class="mt-6">
+            <div class="mt-6 flex gap-3">
                 <a href="{{ route('admin.supplier-imports.index') }}"
                     class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
                     Manage supplier imports
+                </a>
+
+                <a href="{{ route('admin.products.index') }}"
+                    class="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-200">
+                    View products
                 </a>
             </div>
         </div>
