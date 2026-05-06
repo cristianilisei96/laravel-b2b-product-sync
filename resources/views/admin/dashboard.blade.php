@@ -25,6 +25,11 @@
                     class="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-200">
                     View products
                 </a>
+
+                <a href="{{ route('admin.orders.index') }}"
+                    class="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-200">
+                    View orders
+                </a>
             </div>
         </div>
 

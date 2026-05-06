@@ -9,6 +9,7 @@ use App\Http\Controllers\Shop\ProductController as ShopProductController;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Shop\CheckoutController;
 use App\Http\Controllers\Shop\OrderController as ShopOrderController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,6 +47,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/supplier-imports', [SupplierImportController::class, 'store'])->name('supplier-imports.store');
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
+    Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.update-status');
 });
 
 Route::get('/shop', [ShopProductController::class, 'index'])->name('shop.products.index');
