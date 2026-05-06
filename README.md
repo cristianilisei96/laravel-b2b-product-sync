@@ -41,6 +41,7 @@ Password: 12345678
 - Stock synchronization
 - Import logs with created, updated and skipped products
 - Artisan command for supplier imports
+- Scheduled automatic product synchronization using Laravel Scheduler
 
 ### Admin Area
 
@@ -72,6 +73,7 @@ Password: 12345678
 - Laravel Breeze
 - External API integration
 - Artisan Commands
+- Laravel Scheduler
 - Custom Middleware
 - Eloquent Relationships
 - Database Seeders
@@ -298,7 +300,7 @@ php artisan optimize:clear
 
 ## Future Improvements
 
-- Scheduled product synchronization
+- Multi-page scheduled supplier synchronization
 - Queue-based imports
 - Product editing in admin
 - More advanced stock rules
