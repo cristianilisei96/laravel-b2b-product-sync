@@ -9,6 +9,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    if (auth()->user()->isAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -18,8 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
-
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 });
+
+require __DIR__ . '/auth.php';
