@@ -26,6 +26,11 @@
                         </a>
                     @endif
 
+                    <a href="{{ route('shop.cart.index') }}"
+                        class="text-sm {{ request()->routeIs('shop.cart.*') ? 'text-gray-900 font-medium' : 'text-gray-600 hover:text-gray-900' }}">
+                        Cart
+                    </a>
+
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center text-sm text-gray-600 hover:text-gray-900">
@@ -103,6 +108,11 @@
                         Dashboard
                     </a>
                 @endif
+
+                <a href="{{ route('shop.cart.index') }}"
+                    class="block text-sm {{ request()->routeIs('shop.cart.*') ? 'text-gray-900 font-medium' : 'text-gray-600' }}">
+                    Cart
+                </a>
 
                 <a href="{{ route('profile.edit') }}" class="block text-sm text-gray-600">
                     Profile

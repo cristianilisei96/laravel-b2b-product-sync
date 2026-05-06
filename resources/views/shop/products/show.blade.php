@@ -14,6 +14,18 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+            @if (session('success'))
+                <div class="mb-6 bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="mb-6 bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
@@ -63,8 +75,7 @@
                             <span
                                 class="inline-flex items-center rounded px-3 py-1 text-sm font-medium
                                 @if ($product->stock_status === 'in_stock') bg-green-100 text-green-700
-                                @else bg-red-100 text-red-700 @endif
-                            ">
+                                @else bg-red-100 text-red-700 @endif">
                                 {{ $product->stock }} available / {{ str_replace('_', ' ', $product->stock_status) }}
                             </span>
                         </div>
@@ -77,14 +88,46 @@
                         </div>
 
                         <div class="mt-8">
-                            <button type="button"
-                                class="inline-flex w-full justify-center items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
-                                Add to cart demo
-                            </button>
+                            @auth
+                                <form method="POST" action="{{ route('shop.cart.store', $product) }}" class="space-y-4">
+                                    @csrf
 
-                            <p class="text-xs text-gray-500 mt-2">
-                                Cart and checkout flow will be implemented in the next phase.
-                            </p>
+                                    <div>
+                                        <label for="quantity" class="block text-sm font-medium text-gray-700">
+                                            Quantity
+                                        </label>
+
+                                        <input type="number" id="quantity" name="quantity"
+                                            value="{{ old('quantity', 1) }}" min="1" max="{{ $product->stock }}"
+                                            class="mt-1 block w-28 rounded-md border-gray-300 shadow-sm">
+
+                                        @error('quantity')
+                                            <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <button type="submit"
+                                        class="inline-flex w-full justify-center items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        @disabled($product->stock <= 0)>
+                                        Add to cart
+                                    </button>
+
+                                    @if ($product->stock <= 0)
+                                        <p class="text-xs text-red-600">
+                                            This product is currently out of stock.
+                                        </p>
+                                    @endif
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="inline-flex w-full justify-center items-center px-4 py-3 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
+                                    Login to add to cart
+                                </a>
+
+                                <p class="text-xs text-gray-500 mt-2">
+                                    You need an account to add products to your cart.
+                                </p>
+                            @endauth
                         </div>
                     </div>
 
