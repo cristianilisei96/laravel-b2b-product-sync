@@ -262,39 +262,39 @@ php artisan optimize:clear
 
 ### Landing Page
 
-![Landing Page](public/screenshots/landing-page.png)
-
-### Admin Dashboard
-
-![Admin Dashboard](public/screenshots/admin-dashboard.png)
-
-### Supplier Import
-
-![Supplier Import](public/screenshots/supplier-import.png)
-
-### Admin Products
-
-![Admin Products](public/screenshots/admin-products.png)
+![Landing Page](public/screenshots/1.landing-page.png)
 
 ### Product Catalog
 
-![Product Catalog](public/screenshots/shop-catalog.png)
+![Product Catalog](public/screenshots/2.shop-catalog.png)
 
 ### Product Details
 
-![Product Details](public/screenshots/product-details.png)
+![Product Details](public/screenshots/3.product-details.png)
 
 ### Shopping Cart
 
-![Shopping Cart](public/screenshots/cart.png)
+![Shopping Cart](public/screenshots/4.cart.png)
 
 ### Checkout
 
-![Checkout](public/screenshots/checkout.png)
+![Checkout](public/screenshots/5.checkout.png)
+
+### Admin Dashboard
+
+![Admin Dashboard](public/screenshots/6.admin-dashboard.png)
+
+### Supplier Import
+
+![Supplier Import](public/screenshots/7.supplier-import.png)
+
+### Admin Products
+
+![Admin Products](public/screenshots/8.admin-products.png)
 
 ### Admin Order Details
 
-![Admin Order Details](public/screenshots/admin-order-details.png)
+![Admin Order Details](public/screenshots/9.admin-order-details.png)
 
 ## Future Improvements
 
